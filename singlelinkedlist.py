@@ -1,7 +1,10 @@
 class node():
-	def __init__(self,value, ref):
+    """
+    Class to create node
+    """
+	def __init__(self,value):
 		self.value = value
-		self.ref = ref
+		self.ref = none
 class SingleLinkedList():
 	def __init__(self, *list):
 		if not len(list):
