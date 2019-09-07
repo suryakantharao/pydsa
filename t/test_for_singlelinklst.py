@@ -1,11 +1,10 @@
 import sys
 import os
 import unittest
-cwd = os.getcwd()
-sys.path.append(cwd+'/../')
 from singlelinkedlist import SingleLinkedList as sllist
 class Helper_Class():
-	def comapre
+	# def comapre
+	pass
 class Basic_Test(unittest.TestCase):
 	def setUp(self):
 		Basic_Test.intial_list = [101, 200, 300]

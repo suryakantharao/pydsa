@@ -1,21 +1,30 @@
-class node():
-    """
-    Class to create node
-    """
+class Node():
+
 	def __init__(self,value):
-		self.value = value
-		self.ref = none
+		self.data = value
+		self.link = None
 class SingleLinkedList():
+	"""
+	This Module Implements List using single linked list
+	===================================================
+	list creation -  						sllist(1, 2, 3)
+	print the list (string overloading)	-	print(slist)
+	"""
+	start = None
+	_len = 0
 	def __init__(self, *list):
-		if not len(list):
-			self.head=None
-		else:
-			self.head = node(list[0], None)
-		prv_nd = self.head
-		for value in list[1:]:
-			nd = node(value,None)
-			prv_nd.ref = nd
-			prv_nd = nd
+		for idx, value in enumerate(list):
+			node = self._create_node(value)
+			if idx:
+				prev_node.link = node
+			else:
+				self.start = node
+			prev_node =  node
+
+	def _create_node(self, value):
+		nd = Node(value)
+		self._len +=1
+		return
 
 	def __setitem__(self, idx,  value):
 		nd = self.head
@@ -37,7 +46,7 @@ class SingleLinkedList():
 		pass
 	def get_slice(self, start, stop, step):
 		rel_step = step
-		print start, stop, step
+		print( start, stop, step)
 		if step is None : step =1
 		if step < 0:
 			if start <= stop:
@@ -54,7 +63,7 @@ class SingleLinkedList():
 		cur_pos = start
 
 		while nd.ref is not None and cur_pos < stop:
-			print "cur_pos= {}".format(cur_pos)
+			print("cur_pos= {}".format(cur_pos))
 			for _ in range(step):
 				nd = nd.ref
 			cur_pos += step
