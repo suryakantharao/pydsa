@@ -2,9 +2,6 @@ import sys
 import os
 import unittest
 from singlelinkedlist import SingleLinkedList as sllist
-class Helper_Class():
-	# def comapre
-	pass
 class Basic_Test(unittest.TestCase):
 	def setUp(self):
 		Basic_Test.intial_list = [101, 200, 300]
@@ -32,6 +29,7 @@ class Basic_Test(unittest.TestCase):
 		test_item = 303
 		Basic_Test.test_list.append(test_item)
 		Basic_Test.intial_list.append(test_item)
-		compare
+		self.assertEquals(list(Basic_Test.test_list),
+						  Basic_Test.intial_list)
 if __name__ == '__main__':
 	unittest.main()

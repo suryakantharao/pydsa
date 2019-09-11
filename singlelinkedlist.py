@@ -1,9 +1,12 @@
+import collections.abc
 class Node():
 
 	def __init__(self,value):
 		self.data = value
 		self.link = None
-class SingleLinkedList():
+
+
+class SingleLinkedList(collections.abc.MutableSequence):
 	"""
 	This Module Implements List using single linked list
 	===================================================
@@ -13,9 +16,10 @@ class SingleLinkedList():
 	start = None
 	_len = 0
 	def __init__(self, *list):
+		prev_node = None
 		for idx, value in enumerate(list):
 			node = self._create_node(value)
-			if idx:
+			if prev_node is not None:
 				prev_node.link = node
 			else:
 				self.start = node
@@ -24,7 +28,7 @@ class SingleLinkedList():
 	def _create_node(self, value):
 		nd = Node(value)
 		self._len +=1
-		return
+		return nd
 
 	def __setitem__(self, idx,  value):
 		nd = self.head
@@ -33,11 +37,11 @@ class SingleLinkedList():
 			nd = nd.ref
 		nd.value = value
 	def append(self, value):
-		nd = self.head
-		while(nd.ref is not None):
-			nd = nd.ref
-		newnd = node(value, None)
-		nd.ref = newnd
+		nodes = self._nodes_traversal()
+		for node in nodes:
+			nd = node
+		newnd = Node(value)
+		nd.link = newnd
 	def __del__(self):
 		pass
 	def push(self):
@@ -70,31 +74,53 @@ class SingleLinkedList():
 			new_list.append(nd.value)
 		return new_list
 	def __getitem__(self, item):
+		"""
+		Repleacates index accessing of list
+		:param item: list index
+		:return: return the item in the list
+		"""
 		if isinstance(item, slice):
 			return self.get_slice(item.start, item.stop, item.step)
-		nd = self.head
-		if item >= len(self): raise IndexError("index {} out of range".format(item))
-		for _ in range(item):
-			nd = nd.ref
-		return nd.value
+		nodes = self._nodes_traversal()
+		for _ in range(item+1):
+			try:
+				nd = next(nodes)
+			except StopIteration:
+				raise IndexError("Index out of range")
+		return nd.data
 	def __len__(self):
-		nd = self.head
-		if nd is None:
-			return 0
-		i = 1
-		while(nd.ref is not None):
-			i +=1
-			nd = nd.ref
-		return  i
+		"""
+		Replecates list len mentod
+		Usage len(sll)
+		:return: length of single linked list
+		"""
+		return self._len
+
 	def __str__(self, ):
-		nd  = self.head
-		if nd is None: return ''
+		"""
+		replecates str of list
+		:return: string value of list
+		"""
 		value = '['
-		value += "{}, ".format(nd.value)
-		while(nd.ref is not None):
-			nd = nd.ref
-			value += "{}, ".format(nd.value)
+		nodes = self._nodes_traversal()
+		for nd  in nodes:
+			value += "{}, ".format(nd.data)
 		value = value.strip(', ')
 		value += "]"
 		return value
 
+	def _nodes_traversal(self):
+
+		nd = self.start
+		while (nd):
+			yield nd
+			nd = nd.link
+	def __delitem__(self, key):
+		pass
+	def insert(self):
+		pass
+if __name__ == '__main__':
+	sll = SingleLinkedList('a','b','c')
+	print(list(sll))
+
+	# TypeError: Can't instantiate abstract class  with abstract methods __delitem__, insert
